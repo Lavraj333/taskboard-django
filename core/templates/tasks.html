@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <h2>Welcome, {{ user.username }}!</h2>
+{% else %}
+    <h2>Welcome, Guest!</h2>
+{% endif %}
+<h2>Your Tasks</h2>
+
+<ul>
+    {% for task in tasks %}
+        <li>
+        {{ task.title }}
+
+        <span class="actions">
+            <a href="{% url 'edit_task' task.id %}" class="btn">Edit</a>
+            <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+        </span>
+    </li>
+    {% empty %}
+        <p>No tasks yet.</p>
+    {% endfor %}
+</ul>
+
+<br>
+<a href="/add/" class="btn">Add Task</a>
+<a href="/logout/" class="btn btn-secondary">Logout</a>
+{% endblock %}
