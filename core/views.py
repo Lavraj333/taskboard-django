@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 def home(request):
-    # Cookie example
     visits = int(request.COOKIES.get('visits', 0)) + 1
     response = render(request, 'home.html', {'visits': visits})
     response.set_cookie('visits', visits)
@@ -17,7 +16,6 @@ def home(request):
 def tasks(request):
     tasks = Task.objects.filter(user=request.user)
 
-    # Session example
     request.session['last_page'] = 'tasks'
 
     return render(request, 'tasks.html', {'tasks': tasks})
