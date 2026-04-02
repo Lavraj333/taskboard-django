@@ -1,15 +1,16 @@
-import time
+import logging
 
-class SimpleMiddleware:
+logger = logging.getLogger(__name__)
+
+class LoggingMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
-        start_time = time.time()
+        logger.info(f"Request Method: {request.method}, Path: {request.path}")
 
         response = self.get_response(request)
 
-        duration = time.time() - start_time
-        print(f"{request.method} {request.path} took {duration:.2f}s")
+        logger.info(f"Response Status: {response.status_code}")
 
         return response
